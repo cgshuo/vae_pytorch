@@ -63,7 +63,7 @@ class VAE(torch.nn.Module):
         super().__init__() #调用父类方法
         self.encoder = encoder
         self.decoder = decoder
-        self._enc_mu = torch.nn.Linear(hidden_dim, latent_dim)
+        self._enc_mu = torch.nn.Linear(hidden_dim, latent_dim)  # 神经网络线性模块
         self._enc_log_sigma = torch.nn.Linear(hidden_dim, latent_dim)
 
     def _sample_latent(self, h_enc):
