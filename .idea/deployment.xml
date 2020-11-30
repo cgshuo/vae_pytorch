@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="zhongxinyang@106.52.128.149:8668 password" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="zhongxinyang@106.52.128.149:8668">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_507" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="zhongxinyang@106.52.128.149:8668 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/zhongxinyang/caoguangshuo/vae_pytorch" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
