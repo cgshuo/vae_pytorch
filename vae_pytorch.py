@@ -104,13 +104,13 @@ if __name__ == '__main__':
 
     encoder = Encoder(input_dim, doc_dim, doc_dim)
     decoder = Decoder(latent_dim, doc_dim, input_dim)
-    vae = VAE(encoder, decoder)
+    vae = VAE(encoder, decoder, latent_dim, doc_dim)
 
     criterion = nn.MSELoss()  # 均方损失函数： loss(x_i,y_i) = (x_i, y_i)^2
 
     optimizer = optim.Adam(vae.parameters(), lr=0.0001)  # 为了使用torch.optim，需先构造一个优化器对象Optimizer，用来保存当前的状态，并能够根据计算得到的梯度来更新参数,lr学习率
     # Adam 自适应 SGD随机梯度下降
-    l = None
+    l = 0
     for epoch in range(100):
         for i, data in enumerate(dataloader, 0):
             inputs, classes = data
@@ -119,9 +119,9 @@ if __name__ == '__main__':
             dec = vae(inputs)
             la_loss = latent_loss(vae.z_mean, vae.z_sigma)
             loss = criterion(dec, inputs) + la_loss
-            loss.backward()
-            optimizer.step()
-            l = loss.data[0]
+            loss.backward()  # 反向传播，计算当前梯度；
+            optimizer.step()  # 根据梯度更新网络参数
+            l += loss.item()
         print(epoch, l)
 
     plt.imshow(vae(inputs).data[0].numpy().reshape(28, 28), cmap='gray')
