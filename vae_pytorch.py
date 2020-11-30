@@ -14,10 +14,12 @@ import torch.optim as optim
 from torch import nn
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 import torchsummary
 from torchsummary import summary
 #summary(your_model, input_size=(channels, H, W))
 
+os.environ["CUDA_VISIBLE_DEVICES"] = '3'
 
 class Normal(object):
     def __init__(self, mu, sigma, log_sigma, v=None, r=None):
@@ -94,7 +96,7 @@ if __name__ == '__main__':
     latent_dim = 8
     doc_dim = 100
     input_dim = 28 * 28
-    batch_size = 100
+    batch_size = 32
 
     transform = transforms.Compose([transforms.ToTensor()])  # pytorch 的一个图形库
     mnist = torchvision.datasets.MNIST('./', download=True, transform=transform)
