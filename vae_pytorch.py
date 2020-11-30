@@ -56,8 +56,8 @@ class Decoder(torch.nn.Module):
         x = F.relu(self.liner1(x))
         return F.relu(self.liner2(x))
 
+
 class VAE(torch.nn.Module):
-    #latent_dim = 8
 
     def __init__(self, encoder, decoder, latent_dim, hidden_dim): # 定义构造方法
         super().__init__() #调用父类方法
@@ -86,10 +86,12 @@ class VAE(torch.nn.Module):
         z = self._sample_latent(h_enc)
         return self.decoder(z)
 
+
 def latent_loss(z_mean, z_stddev):
     mean_sq = z_mean * z_mean
     stddev_sq = z_stddev * z_stddev
     return 0.5 * torch.mean(mean_sq + stddev_sq - torch.log(stddev_sq) - 1)
+
 
 if __name__ == '__main__':
 
