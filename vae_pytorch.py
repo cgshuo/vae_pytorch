@@ -36,7 +36,7 @@ class Normal(object):
 
 
 class Encoder(torch.nn.Module):
-    def __init__(self, D_in, H, D_out):
+    def __init__(self, D_in, H, D_out): # input_dim, hidden_dim, hidden_dim
         super().__init__()
         self.liner1 = torch.nn.Linear(D_in, H) # dimension(D_in, H)
         self.liner2 = torch.nn.Linear(H, D_out)
@@ -47,7 +47,7 @@ class Encoder(torch.nn.Module):
 
 
 class Decoder(torch.nn.Module):
-    def __init__(self, D_in, H, D_out):
+    def __init__(self, D_in, H, D_out): # latent_dim, hidden_dim, input_dim
         super().__init__()
         self.liner1 = torch.nn.Linear(D_in, H)
         self.liner2 = torch.nn.Linear(H, D_out)
@@ -59,12 +59,12 @@ class Decoder(torch.nn.Module):
 class VAE(torch.nn.Module):
     #latent_dim = 8
 
-    def __init__(self, encoder, decoder, latent_dim, doc_dim): # 定义构造方法
+    def __init__(self, encoder, decoder, latent_dim, hidden_dim): # 定义构造方法
         super().__init__() #调用父类方法
         self.encoder = encoder
         self.decoder = decoder
-        self._enc_mu = torch.nn.Linear(doc_dim, latent_dim)
-        self._enc_log_sigma = torch.nn.Linear(doc_dim, latent_dim)
+        self._enc_mu = torch.nn.Linear(hidden_dim, latent_dim)
+        self._enc_log_sigma = torch.nn.Linear(hidden_dim, latent_dim)
 
     def _sample_latent(self, h_enc):
         """
@@ -94,7 +94,7 @@ def latent_loss(z_mean, z_stddev):
 if __name__ == '__main__':
 
     latent_dim = 8
-    doc_dim = 100
+    hidden_dim = 100
     input_dim = 28 * 28
     batch_size = 32
 
@@ -102,9 +102,9 @@ if __name__ == '__main__':
     mnist = torchvision.datasets.MNIST('./', download=True, transform=transform)
     dataloader = Data.DataLoader(mnist, batch_size=batch_size, shuffle=True, num_workers=2)  # 用来把训练数据分成多个小组，此函数每次抛出一组数据。直至把所有的数据都抛出
 
-    encoder = Encoder(input_dim, doc_dim, doc_dim)
-    decoder = Decoder(latent_dim, doc_dim, input_dim)
-    vae = VAE(encoder, decoder, latent_dim, doc_dim)
+    encoder = Encoder(input_dim, hidden_dim, hidden_dim)
+    decoder = Decoder(latent_dim, hidden_dim, input_dim)
+    vae = VAE(encoder, decoder, latent_dim, hidden_dim)
 
     criterion = nn.MSELoss()  # 均方损失函数： loss(x_i,y_i) = (x_i, y_i)^2
 
